@@ -96,4 +96,13 @@ class EmotionalFaceView(context:Context,attrs:AttributeSet): View(context,attrs)
 //        Draw the path to the canvas.
 
     }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        // 1
+        size = Math.min(measuredWidth, measuredHeight)
+        // 2
+        setMeasuredDimension(size, size)
+    }
+
 }

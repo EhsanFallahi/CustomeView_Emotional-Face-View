@@ -29,4 +29,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_welcome" />
 
+    <com.example.emotionalfacecustomeview.EmotionalFaceView
+        android:id="@+id/happyButton"
+        android:layout_width="@dimen/face_button_dimen"
+        android:layout_height="@dimen/face_button_dimen"
+        app:borderColor="@color/white"
+        app:eyesColor="@color/white"
+        app:faceColor="@color/red"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emotional_face_view"
+        app:mouthColor="@color/white"
+        app:state="happy" />
+
+    <com.example.emotionalfacecustomeview.EmotionalFaceView
+        android:id="@+id/sadButton"
+        android:layout_width="@dimen/face_button_dimen"
+        android:layout_height="@dimen/face_button_dimen"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        app:borderColor="@color/black"
+        app:eyesColor="@color/black"
+        app:faceColor="@color/light_grey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emotional_face_view"
+        app:mouthColor="@color/black"
+        app:state="sad" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

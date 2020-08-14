@@ -11,11 +11,11 @@
     <TextView
         android:id="@+id/txt_welcome"
         android:layout_width="0dp"
-        android:layout_height="32dp"
-        android:text="CustomView With Ehsan"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        android:layout_height="50sp"
         android:gravity="center"
+        android:text="CustomView With Ehsan"
+        android:textSize="32sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

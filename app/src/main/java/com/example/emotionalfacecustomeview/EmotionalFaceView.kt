@@ -1,10 +1,7 @@
 package com.example.emotionalfacecustomeview
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.RectF
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 
@@ -21,7 +18,7 @@ class EmotionalFaceView(context:Context,attrs:AttributeSet): View(context,attrs)
     // View size in pixels
     private var size = 320
 
-
+    private val mouthPath= Path()
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -70,5 +67,33 @@ class EmotionalFaceView(context:Context,attrs:AttributeSet): View(context,attrs)
     }
 
     private fun drawMouth(canvas: Canvas) {
+        // 1
+        mouthPath.moveTo(size * 0.22f, size * 0.7f)
+        // 2
+        mouthPath.quadTo(size * 0.50f, size * 0.80f, size * 0.78f, size * 0.70f)
+        // 3
+        mouthPath.quadTo(size * 0.50f, size * 0.95f, size * 0.22f, size * 0.70f)
+        // 4
+        paint.color = mouthColor
+        paint.style = Paint.Style.FILL
+        // 5
+        canvas.drawPath(mouthPath, paint)
+
+//        Set the starting point of the path to (x0,y0) by using the moveTo() method where:
+//        x0 is equal to 22% of the size.
+//        y0 is equal to 70% of the size.
+//        Draw a curved path from the starting point and through (x1,y1) that ends with (x2,y2) where:
+//        x1 is equal to 50% of the size.
+//        y1 is equal to 80% of the size.
+//        x2 is equal to 78% of the size.
+//        y2 is equal to 70% of the size.
+//        Draw a curved path starting from the last end point (x2,y2) and through (x3,y3) and that ends with (x0,y0) where:
+//        x3 is equal to 50% of the size.
+//        y3 is equal to 90% of the size.
+//        x0 is equal to 22% of the size.
+//        y0 is equal to 70% of the size.
+//        Set the paint color to the mouthColor and make it filling the drawing area.
+//        Draw the path to the canvas.
+
     }
 }

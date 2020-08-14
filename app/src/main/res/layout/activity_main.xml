@@ -47,7 +47,6 @@
         android:layout_width="@dimen/face_button_dimen"
         android:layout_height="@dimen/face_button_dimen"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         app:borderColor="@color/black"
         app:eyesColor="@color/black"
         app:faceColor="@color/light_grey"

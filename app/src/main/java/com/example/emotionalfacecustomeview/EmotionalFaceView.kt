@@ -7,18 +7,73 @@ import android.view.View
 
 class EmotionalFaceView(context:Context,attrs:AttributeSet): View(context,attrs) {
     // Paint object for coloring and styling
-    private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val paint = Paint()
+    private val mouthPath = Path()
+    private var size = 0
     // Some colors for the face background, eyes and mouth.
-    private var faceColor = Color.YELLOW
-    private var eyesColor = Color.BLACK
-    private var mouthColor = Color.BLACK
-    private var borderColor = Color.BLACK
-    // Face border width in pixels
-    private var borderWidth = 4.0f
-    // View size in pixels
-    private var size = 320
+    // 2
+    private var faceColor = DEFAULT_FACE_COLOR
+    private var eyesColor = DEFAULT_EYES_COLOR
+    private var mouthColor = DEFAULT_MOUTH_COLOR
+    private var borderColor = DEFAULT_BORDER_COLOR
+    private var borderWidth = DEFAULT_BORDER_WIDTH
 
-    private val mouthPath= Path()
+    // 1
+    companion object {
+        private const val DEFAULT_FACE_COLOR = Color.YELLOW
+        private const val DEFAULT_EYES_COLOR = Color.BLACK
+        private const val DEFAULT_MOUTH_COLOR = Color.BLACK
+        private const val DEFAULT_BORDER_COLOR = Color.BLACK
+        private const val DEFAULT_BORDER_WIDTH = 4.0f
+
+        const val HAPPY = 0L
+        const val SAD = 1L
+    }
+
+    // 3
+    var happinessState = HAPPY
+        set(state) {
+            field = state
+            // 4
+            invalidate()
+        }
+
+    // 5
+    init {
+        paint.isAntiAlias = true
+        setupAttributes(attrs)
+    }
+    private fun setupAttributes(attrs: AttributeSet?) {
+        // 6
+        // Obtain a typed array of attributes
+        val typedArray = context.theme.obtainStyledAttributes(attrs, R.styleable.EmotionalFaceView,
+            0, 0)
+
+        // 7
+        // Extract custom attributes into member variables
+        happinessState = typedArray.getInt(R.styleable.EmotionalFaceView_state, HAPPY.toInt()).toLong()
+        faceColor = typedArray.getColor(R.styleable.EmotionalFaceView_faceColor, DEFAULT_FACE_COLOR)
+        eyesColor = typedArray.getColor(R.styleable.EmotionalFaceView_eyesColor, DEFAULT_EYES_COLOR)
+        mouthColor = typedArray.getColor(R.styleable.EmotionalFaceView_mouthColor, DEFAULT_MOUTH_COLOR)
+        borderColor = typedArray.getColor(R.styleable.EmotionalFaceView_borderColor,
+            DEFAULT_BORDER_COLOR)
+        borderWidth = typedArray.getDimension(R.styleable.EmotionalFaceView_borderWidth,
+            DEFAULT_BORDER_WIDTH)
+
+        // 8
+        // TypedArray objects are shared and must be recycled.
+        typedArray.recycle()
+
+
+//        1.Add two constants, one for the HAPPY state and one for the SAD state.
+//        2.Setup default values of the XML attribute properties, in case a user of the custom view does not set one of them
+//        3.Add a new property called happinessState for the face happiness state.
+//        4.Call the invalidate() method in the set happinessState method. The invalidate() method makes Android redraw the view by calling onDraw().
+//        5.Call a new private setupAttributes() method from the init block.
+//        6.Obtain a typed array of the XML attributes
+//        7.Extract custom attributes into member variables
+//        8.Recycle the typedArray to make the data associated with it ready for garbage collection.
+    }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -67,16 +122,23 @@ class EmotionalFaceView(context:Context,attrs:AttributeSet): View(context,attrs)
     }
 
     private fun drawMouth(canvas: Canvas) {
-        // 1
+        mouthPath.reset()
+
         mouthPath.moveTo(size * 0.22f, size * 0.7f)
-        // 2
-        mouthPath.quadTo(size * 0.50f, size * 0.80f, size * 0.78f, size * 0.70f)
-        // 3
-        mouthPath.quadTo(size * 0.50f, size * 0.95f, size * 0.22f, size * 0.70f)
-        // 4
+
+        if (happinessState == HAPPY) {
+            // 1
+            mouthPath.quadTo(size * 0.5f, size * 0.80f, size * 0.78f, size * 0.7f)
+            mouthPath.quadTo(size * 0.5f, size * 0.90f, size * 0.22f, size * 0.7f)
+        } else {
+            // 2
+            mouthPath.quadTo(size * 0.5f, size * 0.50f, size * 0.78f, size * 0.7f)
+            mouthPath.quadTo(size * 0.5f, size * 0.60f, size * 0.22f, size * 0.7f)
+        }
+
         paint.color = mouthColor
         paint.style = Paint.Style.FILL
-        // 5
+
         canvas.drawPath(mouthPath, paint)
 
 //        Set the starting point of the path to (x0,y0) by using the moveTo() method where:
